@@ -18,7 +18,7 @@ import { FilesContext, ErrorContext } from './context';
 import { stepTitle, Steps } from './constants';
 import { stateHasFile } from './actions';
 import { Result } from './Result/Result';
-import { Instructions } from './Instructions';
+import { Instructions } from './Instructions/Instructions';
 import { Errors } from './Errors';
 
 export function Page() {
@@ -43,8 +43,8 @@ export function Page() {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   }, []);
 
-  if (!stateHasFile(state) && activeStep !== 0) {
-    setActiveStep(0);
+  if (!stateHasFile(state) && activeStep !== Steps.Select) {
+    setActiveStep(Steps.Select);
   }
 
   return (

@@ -4,8 +4,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {
-  Button, CardActions, Stack, useTheme,
+  Button, CardActions, Grid, Stack, useMediaQuery, useTheme,
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { getFirstFromTheStore, storeToBlockchain } from '../actions';
 import { FilesContext, ErrorContext } from '../context';
 import { FilePreview } from './FilePreview';
@@ -14,6 +15,17 @@ import { BlockchainData } from './BlockchainData';
 import { Steps } from '../constants';
 import { Progress } from './Progress';
 import { ErrorInsufficientFunds } from './ErrorInsufficientFunds';
+
+const MainCard = styled(Card)(({ theme }) => ({
+  width: theme.spacing(130),
+  [theme.breakpoints.down('lg')]: {
+    minWidth: theme.spacing(110),
+  },
+  [theme.breakpoints.down('md')]: {
+    minWidth: 'auto',
+    width: '100%',
+  },
+}));
 
 interface Props {
   next: any;
@@ -27,6 +39,7 @@ export function Result({ back, next, activeStep }: Props) {
   const [isUploading, setUploading] = React.useState(false);
   const [isFundError, setFundError] = React.useState(false);
   const theme = useTheme();
+  const showFilePreview = useMediaQuery(theme.breakpoints.up('md'));
 
   const onCancel = () => {
     dispatch({ type: ActionType.clear });
@@ -71,24 +84,14 @@ export function Result({ back, next, activeStep }: Props) {
   };
 
   return (
-    <Box sx={{
-      display: 'flex',
-      justifyContent: 'center',
-      mt: 4,
-      mb: 4,
-    }}
-    >
+    <Box display="flex" justifyContent="center" mt={4} mb={4}>
       {isFundError && <ErrorInsufficientFunds back={back} />}
-      <Card sx={{
-        width: 'auto',
-        minWidth: theme.spacing(120),
-      }}
-      >
-        <Box sx={{ display: 'flex' }}>
-          <FilePreview file={fileData.file} preview={fileData.preview} />
+      <MainCard>
+        <Box display="flex">
+          {showFilePreview && <FilePreview file={fileData.file} preview={fileData.preview} />}
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             <CardContent sx={{ flex: '1 0 auto' }}>
-              <Typography component="div" variant="h5" sx={{ pb: 3 }}>
+              <Typography component="div" variant="h5" pb={1}>
                 {fileData.file.name}
               </Typography>
               <BlockchainData isUploading={isUploading} />
@@ -96,44 +99,50 @@ export function Result({ back, next, activeStep }: Props) {
           </Box>
         </Box>
         <CardActions>
-          <Progress fileData={fileData} isUploading={isUploading} />
-          <Stack
-            direction="row"
-            justifyContent="flex-end"
-            sx={{ width: '100%' }}
-            spacing={2}
-          >
-            {finished ? (
-              <Button
-                onClick={onCancel}
-                variant="outlined"
-                color="primary"
+          <Grid container alignItems="center">
+            <Grid item xs={12} sm={4}>
+              <Progress fileData={fileData} isUploading={isUploading} />
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Stack
+                direction="row"
+                justifyContent="flex-end"
+                sx={{ width: '100%' }}
+                spacing={2}
               >
-                Stamp another file
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  color="error"
-                  onClick={onCancel}
-                  disabled={cancelButtonDisabled}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={onUpload}
-                  disabled={saveButtonDisabled}
-                >
-                  Store to the blockchain
-                </Button>
-              </>
-            )}
-          </Stack>
+                {finished ? (
+                  <Button
+                    onClick={onCancel}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Stamp another file
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={onCancel}
+                      disabled={cancelButtonDisabled}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={onUpload}
+                      disabled={saveButtonDisabled}
+                    >
+                      Store to the blockchain
+                    </Button>
+                  </>
+                )}
+              </Stack>
+            </Grid>
+          </Grid>
         </CardActions>
-      </Card>
+      </MainCard>
     </Box>
   );
 }

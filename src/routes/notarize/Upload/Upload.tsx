@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Box from '@mui/material/Box';
 import { useDropzone, FileRejection } from 'react-dropzone';
-import { styled, Theme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 import { FilesContext, ErrorContext } from '../context';
 import { ActionType } from '../reducer';
@@ -12,7 +12,7 @@ interface Props {
   next: () => void;
 }
 
-const DropBox = styled('div')(({ theme }: { theme: Theme }) => ({
+const DropBox = styled('div')(({ theme }) => ({
   borderRadius: Number(theme.shape.borderRadius) * 5,
   borderColor: theme.palette.grey[500],
   borderStyle: 'dashed',
@@ -88,14 +88,12 @@ export function Upload({ next }: Props) {
         justifyContent: 'center',
       }}
       >
-        {/* <Typography variant="h4" component="h1" gutterBottom> */}
         <DropBox {...getRootProps()}>
           <input {...getInputProps()} />
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom pl={1} pr={1} textAlign="center">
             Drag n drop your file here, or click to select.
           </Typography>
         </DropBox>
-        {/* </Typography> */}
       </Box>
     </>
   );

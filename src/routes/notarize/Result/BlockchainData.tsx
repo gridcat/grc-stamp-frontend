@@ -1,12 +1,12 @@
-import { TableContainer, Table, TableBody } from '@mui/material';
+import {
+  List, Divider,
+} from '@mui/material';
 import React from 'react';
+import { format } from 'date-fns';
 import { getFirstFromTheStore, getStampInfoById } from '../actions';
 import { FilesContext } from '../context';
 import { ActionType } from '../reducer';
-import { BlockInfo } from './BlockInfo';
-import { HashInfo } from './HashInfo';
-import { TimeInfo } from './TimeInfo';
-import { TXInfo } from './TXInfo';
+import { Info } from './Info';
 
 interface Props {
   isUploading: boolean;
@@ -60,19 +60,32 @@ export function BlockchainData({ isUploading }: Props) {
   });
 
   return (
-    <TableContainer>
-      <Table>
-        <TableBody>
-          <HashInfo hash={fileData.hash} />
-          {(fileData.blockchainData || isUploading) && (
-          <>
-            <TXInfo tx={transaction} />
-            <BlockInfo block={block} />
-            <TimeInfo time={time} />
-          </>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <List>
+      <Info
+        title="Hash"
+        value={fileData.hash}
+      />
+      {(fileData.blockchainData || isUploading) && (
+      <>
+        <Divider variant="fullWidth" component="li" />
+        <Info
+          title="TX ID"
+          value={transaction}
+          link={process.env.NEXT_PUBLIC_EXPLORER_TX_URL?.replace(/\[data\]/, String(transaction))}
+        />
+        <Divider variant="fullWidth" component="li" />
+        <Info
+          title="Block"
+          link={process.env.NEXT_PUBLIC_EXPLORER_BLOCK_URL?.replace(/\[data\]/, String(block))}
+          value={block}
+        />
+        <Divider variant="fullWidth" component="li" />
+        <Info
+          title="Time"
+          value={time && format(new Date(time * 1000), 'PPpp ')}
+        />
+      </>
+      )}
+    </List>
   );
 }
