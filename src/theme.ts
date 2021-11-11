@@ -1,13 +1,18 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes, lighten } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
+import { PaletteMode, ThemeOptions } from '@mui/material';
 
 // Create a theme instance.
-const theme = createTheme({
+const theme = (mode: PaletteMode): ThemeOptions => ({
   palette: {
-    primary: {
+    primary: mode === 'light' ? {
       main: '#732DE2',
       light: '#953EF5',
       dark: '#4c1ea4',
+    } : {
+      main: lighten('#732DE2', 0.3),
+      light: lighten('#953EF5', 0.3),
+      dark: lighten('#4c1ea4', 0.3),
     },
     secondary: {
       main: '#e58842',
@@ -17,6 +22,7 @@ const theme = createTheme({
     error: {
       main: red.A400,
     },
+    mode,
   },
   typography: {
     fontFamily: [
@@ -32,14 +38,25 @@ const theme = createTheme({
         contained: {
           borderRadius: 50,
           textTransform: 'none',
+          paddingLeft: 24,
+          paddingRight: 24,
+          paddingTop: 10,
+          paddingBottom: 10,
         },
         outlined: {
           borderWidth: 2,
           borderRadius: 50,
+          paddingLeft: 24,
+          paddingRight: 24,
+          paddingTop: 10,
+          paddingBottom: 10,
           textTransform: 'none',
           ':hover': {
             borderWidth: 2,
           },
+        },
+        text: {
+          textTransform: 'none',
         },
         root: {
           '&.Mui-disabled': {
@@ -51,4 +68,4 @@ const theme = createTheme({
   },
 });
 
-export default responsiveFontSizes(theme);
+export const themeCreator = (mode: PaletteMode = 'light') => responsiveFontSizes(createTheme(theme(mode)));
