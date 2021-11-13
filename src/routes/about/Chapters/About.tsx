@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Link } from '@mui/material';
 import React from 'react';
 
 function ChapterAbout() {
   return (
     <Box pb={3}>
       <Typography variant="h4" component="h3" pb={2} id="about-the-service">
-        About the service
+        About the Service
       </Typography>
       <Box component="article">
         <Typography gutterBottom variant="body1" component="p">
@@ -20,7 +20,7 @@ function ChapterAbout() {
         <Typography gutterBottom variant="body1" component="p">
           We do not use any of the tracking pixels, the only exception is
           {' '}
-          <a href="https://github.com/plausible/analytics" rel="nofollow">Plausible</a>
+          <Link href="https://github.com/plausible/analytics" rel="nofollow">Plausible</Link>
           {' '}
           which claims to be the privacy-friendly web analytics alternative to Google Analytics.
         </Typography>

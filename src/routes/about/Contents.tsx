@@ -27,18 +27,18 @@ export function Contents() {
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemText>
-                About the service
+                About the Service
               </ListItemText>
             </ListItemButton>
           </ListItem>
         </Link>
-        {/* <Link href="#protocol" passHref>
+        <Link href="#protocol-overview" passHref>
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText>Protocol</ListItemText>
+              <ListItemText>Protocol Overview</ListItemText>
             </ListItemButton>
           </ListItem>
-        </Link> */}
+        </Link>
         <Link href="#costs" passHref>
           <ListItem disablePadding>
             <ListItemButton>
