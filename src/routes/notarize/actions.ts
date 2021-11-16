@@ -1,7 +1,9 @@
 import { sha256 } from 'js-sha256';
 import axios from 'axios';
+import { StampRepository } from 'repositories/StampsRepository';
+import { StampEntity } from 'entities/StampEntity';
 import {
-  BlockchainData, FileData, StateInterface,
+  FileData, StateInterface,
 } from './reducer';
 
 export function readFile(file: File): Promise<ArrayBuffer | undefined> {
@@ -44,20 +46,11 @@ export function hashFiles(file: File): Promise<string> {
   });
 }
 
-export async function checkForExistance(
+export async function checkForExistence(
   hash: string,
-): Promise<BlockchainData | null> {
-  // Get the very first one from the store
-  const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/stamps?filter[hash]=${hash}`);
-  if (data?.meta?.count > 0) {
-    const existing = data.data[0];
-    return {
-      block: existing.attributes.block,
-      tx: existing.attributes.tx,
-      time: existing.attributes.time,
-    };
-  }
-  return null;
+): Promise<StampEntity | null> {
+  const repository = new StampRepository();
+  return repository.findStampByHash(hash);
 }
 
 export async function storeToBlockchain(hash: string): Promise<string | undefined> {
@@ -76,19 +69,19 @@ export async function storeToBlockchain(hash: string): Promise<string | undefine
 
 export async function getStampInfoById(
   dataId: number,
-): Promise<{ block?: number, tx?: string, time?: number }> {
-  const result = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/stamps/${dataId}`);
-  const { block, tx, time } = result.data.data.attributes;
-  return { block, tx, time };
+): Promise<StampEntity | null> {
+  const repository = new StampRepository();
+  return repository.getStampById(dataId);
 }
 
 export function readableFileSize(size: number): string {
   let newSize = size;
+  const isFloat = (n: any) => Number(n) === n && n % 1 !== 0;
   const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
   let i = 0;
   while (newSize >= 1024) {
     newSize /= 1024;
     ++i;
   }
-  return `${newSize.toFixed(1)} ${units[i]}`;
+  return `${isFloat(newSize) ? newSize.toFixed(1) : newSize} ${units[i]}`;
 }
