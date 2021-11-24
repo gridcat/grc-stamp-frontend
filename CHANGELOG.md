@@ -1,3 +1,16 @@
+# [1.10.0](https://github.com/gridcat/grc-stamp-frontend/compare/v1.9.0...v1.10.0) (2021-11-24)
+
+
+### Bug Fixes
+
+* minor text fixes ([bb86942](https://github.com/gridcat/grc-stamp-frontend/commit/bb86942cfb6e79cd95b0c91a1158574b931d6fdf))
+* very small text change on the main page ([115bbd9](https://github.com/gridcat/grc-stamp-frontend/commit/115bbd941a4c22164dc7dfdd85e2cdb446aaff73))
+
+
+### Features
+
+* use wallet endpoint and grab balance and wallet ([1e77c9a](https://github.com/gridcat/grc-stamp-frontend/commit/1e77c9aeb812088dc5eab318ec4aa83c49a4c3fd))
+
 # [1.9.0](https://github.com/gridcat/grc-stamp-frontend/compare/v1.8.1...v1.9.0) (2021-11-16)
 
 
