@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/gridcat/grc-stamp-frontend/compare/v1.10.0...v1.10.1) (2021-11-24)
+
+
+### Bug Fixes
+
+* wrong address from api ([7fc85f5](https://github.com/gridcat/grc-stamp-frontend/commit/7fc85f5e8a3113ba7997ba93f422ae1cd9218871))
+
 # [1.10.0](https://github.com/gridcat/grc-stamp-frontend/compare/v1.9.0...v1.10.0) (2021-11-24)
 
 
