@@ -4,3 +4,5 @@
 This application is running with a help of [Next.js](https://nextjs.org/)
 
 This is the frontend part of the [Gridcoin Stamp Project](https://stamp.gridcoin.club)
+
+## This repository is now the part of the gridcoin community https://github.com/gridcoin-community/stamp.gridcoin.club
